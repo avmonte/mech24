@@ -1,0 +1,44 @@
+
+lse-f-91 (17 slots)
+    Shift = 1	Min clashes = 4216	at step 80
+    Shift = 2	Min clashes = 412	at step 23
+    Shift = 3	Min clashes = 234	at step 15
+    Shift = 4	Min clashes = 176	at step 7
+    Shift = 5	Min clashes = 106	at step 159
+    Shift = 6	Min clashes = 100	at step 267
+    Shift = 7	Min clashes = 92	at step 206
+    Shift = 8	Min clashes = 66	at step 555
+    Shift = 9	Min clashes = 44	at step 471
+    Shift = 10	Min clashes = 70	at step 524
+    Shift = 11	Min clashes = 48	at step 539
+    Shift = 12	Min clashes = 52	at step 596
+    Shift = 13	Min clashes = 42	at step 159
+    Shift = 14	Min clashes = 52	at step 216
+    Shift = 15	Min clashes = 42	at step 755
+    Shift = 16	Min clashes = 34	at step 866
+    Shift = 17	Min clashes = 94	at step 1
+    Shift = 18	Min clashes = 46	at step 883
+
+    GLOBAL MIN: Shift = 16	Min clashes = 34	at step 866
+
+tre-s-92 (17 slots)
+    Shift = 1	Min clashes = 5136	at step 49
+    Shift = 2	Min clashes = 684	at step 86
+    Shift = 3	Min clashes = 510	at step 219
+    Shift = 4	Min clashes = 428	at step 48
+    Shift = 5	Min clashes = 390	at step 92
+    Shift = 6	Min clashes = 324	at step 667
+    Shift = 7	Min clashes = 286	at step 989
+    Shift = 8	Min clashes = 292	at step 357
+    Shift = 9	Min clashes = 296	at step 122
+    Shift = 10	Min clashes = 254	at step 538
+    Shift = 11	Min clashes = 270	at step 488
+    Shift = 12	Min clashes = 238	at step 815
+    Shift = 13	Min clashes = 258	at step 998
+    Shift = 14	Min clashes = 248	at step 363
+    Shift = 15	Min clashes = 206	at step 768
+    Shift = 16	Min clashes = 208	at step 405
+    Shift = 17	Min clashes = 662	at step 1
+    Shift = 18	Min clashes = 222	at step 249
+
+    GLOBAL MIN: Shift = 15	Min clashes = 206	at step 768
