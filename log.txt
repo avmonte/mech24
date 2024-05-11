@@ -1,4 +1,8 @@
 
+Interesting pattern noticed:
+As the number of allowed shifts increases, the number of clashes decreases.
+Generally. It does not necessarily converge.
+
 lse-f-91 (17 slots)
     Shift = 1	Min clashes = 4216	at step 80
     Shift = 2	Min clashes = 412	at step 23

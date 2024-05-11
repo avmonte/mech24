@@ -1,9 +1,5 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.*;
 
 public class TimeTable extends JFrame implements ActionListener {
