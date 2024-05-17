@@ -92,7 +92,7 @@ public class CourseArray {
 		return result;
 	}
 	
-	public void iterate(int shifts) {
+	public void iterate(int shifts, boolean optimize) {
 		for (int index = 1; index < elements.length; index++) {
 			elements[index].setForce();
 			for (int move = 1; move <= shifts && elements[index].force != 0; move++) { 
@@ -101,6 +101,8 @@ public class CourseArray {
 			}
 		}
 	}
+
+
 	
 	public void printResult() {
 		for (int i = 1; i < elements.length; i++)

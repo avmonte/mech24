@@ -1,0 +1,18 @@
+
+Implementation
++ getTimeSlots()
++ slotStatus()
++ “Continue” button and functionality
++ Pattern identification and training (via scripts within "load", “start”, and “continue” buttons’ implementation)
++ AutoAssociator class
+
+Results
+> After manual "playing" with a particular timetable,
+  the algorithm identifies the good patterns and trains a Hopfield network on the background.
+
+Future
+>>> Proceeding with development of Task 4 (partial) and Task 5 (none)
+>>> Possible optimizations and improvements
+
+Identified issues/Concerns
+= None, so far. If any, they will be addressed in the future.

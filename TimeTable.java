@@ -11,6 +11,7 @@ public class TimeTable extends JFrame implements ActionListener {
 	private Color CRScolor[] = {Color.RED, Color.GREEN, Color.BLACK};
 	private int m = Integer.MAX_VALUE;
 	private int steps_all = 0;
+	private boolean trained = false;
 //	JLabel patternCounter = new JLabel("Patterns Left: " + m);
 
 	AutoAssociator HopfieldNetwork;
@@ -34,7 +35,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		String capField[] = {"Slots:", "Courses:", "Clash File:", "Iters:", "Shift:"};
 		field = new JTextField[capField.length];
 		
-		String capButton[] = {"Load", "Start", "Step", "Continue", "Print", "Exit", "TestVals"};
+		String capButton[] = {"Load", "Start", "Step", "Continue", "Print", "Exit", "Auto Train"};
 		tool = new JButton[capButton.length];
 		
 		tools.setLayout(new GridLayout(2 * capField.length + capButton.length, 1));
@@ -101,7 +102,7 @@ public class TimeTable extends JFrame implements ActionListener {
 			for (i = 1; i < courses.length(); i++) courses.setSlot(i, 0);
 			
 			for (int iteration = 1; iteration <= Integer.parseInt(field[3].getText()); iteration++) {
-				courses.iterate(Integer.parseInt(field[4].getText()));
+				courses.iterate(Integer.parseInt(field[4].getText()), trained);
 				draw();
 				clashes = courses.clashesLeft();
 				if (clashes < min) {
@@ -131,14 +132,14 @@ public class TimeTable extends JFrame implements ActionListener {
 
 			if (m == 0) {
 				System.out.println("Yay, training is done");
+				trained = true;
 			}
-
-			System.out.println("Patterns remain to find is " + m);
+			else System.out.println("Patterns remain to find is " + m);
 
 			setVisible(true);
 			break;
 		case 2:
-			courses.iterate(Integer.parseInt(field[4].getText()));
+			courses.iterate(Integer.parseInt(field[4].getText()), trained);
 			steps_all++;
 			draw();
 			break;
@@ -147,7 +148,24 @@ public class TimeTable extends JFrame implements ActionListener {
 			step = 0;
 
 			for (int iteration = 1; iteration <= Integer.parseInt(field[3].getText()); iteration++) {
-				courses.iterate(Integer.parseInt(field[4].getText()));
+				courses.iterate(Integer.parseInt(field[4].getText()), trained);
+
+				// optimize with the Hopfield Network
+				if (trained) {
+					System.out.println("Optimizing with Hopfield Network");
+					for (int slot = 0; slot < Integer.parseInt(field[0].getText()); slot++) {
+						int[] pattern = courses.getTimeSlot(slot);
+						int[] revised = HopfieldNetwork.recall(pattern);
+
+						for (int k = 0; k < revised.length; k++) {
+							if (revised[k] == 1) {
+								courses.setSlot(k, slot);
+								System.out.println("revised");
+							}
+						}
+					}
+				}
+
 				draw();
 				clashes = courses.clashesLeft();
 				if (clashes < min) {
@@ -171,11 +189,11 @@ public class TimeTable extends JFrame implements ActionListener {
 			}
 
 			if (m == 0) {
-				System.out.println("Training is done");
+				System.out.println("Yay, training is done");
+				trained = true;
 				// FIXME : Yay Training is done
 			}
-
-			System.out.println("Patterns remain to find is " + m);
+			else System.out.println("Patterns remain to find is " + m);
 
 
 			setVisible(true);
@@ -189,6 +207,46 @@ public class TimeTable extends JFrame implements ActionListener {
 			System.exit(0);
 			break;
 		case 6:
+			// Auto Train
+			int iterations = Integer.parseInt(field[3].getText());
+			for (int shift = Integer.parseInt(field[0].getText()); shift > 0; shift--) {
+				if (m == 0) break;
+				System.out.println("Training with shift = " + shift + " is being trained");
+
+				// Iterate
+				min = Integer.MAX_VALUE;
+				step = 0;
+				for (int iter = 1; iter <= iterations; iter++) {
+					courses.iterate(shift, trained);
+					draw();
+
+					clashes = courses.clashesLeft();
+					if (clashes < min) {
+						min = clashes;
+						step = iter + steps_all;
+					}
+				}
+				steps_all += iterations;
+				System.out.println("Shift = " + shift + "\tMin clashes = " + min + "\tat step " + step);
+
+				for (int n = 0; n < Integer.parseInt(field[0].getText()); n++) {
+					int[] temp = courses.slotStatus(shift);
+					int threshold = (Integer.parseInt(field[1].getText()) / Integer.parseInt(field[0].getText())) / 2;
+					// Pattern Gathering
+					if (temp[0] >= threshold && temp[1] < 5 && m > 0) {
+						m--;
+						int[] pattern = courses.getTimeSlot(n);
+
+						HopfieldNetwork.train(pattern);
+					}
+				}
+				System.out.println("Patterns remain to find is " + m + "\n");
+			}
+
+			if (m == 0) {
+				System.out.println("Yay, training is done");
+				trained = true;
+			}
 			break;
 		}
 	}
